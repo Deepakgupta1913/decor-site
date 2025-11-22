@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuraDecor – Modern Home Decor</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f5f3f0;
+      --bg-alt: #ffffff;
+      --primary: #c17f4a;
+      --primary-soft: rgba(193, 127, 74, 0.08);
+      --text: #232325;
+      --muted: #6f6f73;
+      --border: #e0ddd8;
+      --shadow-soft: 0 18px 45px rgba(15, 15, 20, 0.08);
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --radius-pill: 999px;
+      --transition-fast: 0.2s ease;
+      --transition-med: 0.35s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #fdf7f1, #f3f1ee 45%, #f5f3f0 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Layout */
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: min(1120px, 100% - 2.5rem);
+      margin-inline: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(245, 243, 240, 0.92), rgba(245, 243, 240, 0.7));
+      border-bottom: 1px solid rgba(224, 221, 216, 0.6);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: 0.9rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 40% 60% 65% 35%;
+      background: radial-gradient(circle at 30% 20%, #fbe0c7, #c17f4a);
+      box-shadow: 0 10px 25px rgba(193, 127, 74, 0.35);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--primary);
+      transition: width var(--transition-fast);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-pill);
+      background: #fff;
+      border: 1px solid rgba(193, 127, 74, 0.3);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      border-radius: var(--radius-pill);
+      background: #111112;
+      color: #fff;
+      padding: 0.55rem 1.2rem;
+      font-size: 0.85rem;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: #000;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .btn-primary span {
+      font-size: 1.1rem;
+      margin-top: 1px;
+    }
+
+    /* Hero */
+
+    .hero {
+      padding: 2.7rem 0 2.4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 2.4rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 4vw, 3.1rem);
+      line-height: 1.12;
+      margin-bottom: 1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero h1 span.highlight {
+      background: linear-gradient(120deg, #c17f4a, #e6b88a);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 0.98rem;
+      max-width: 480px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .btn-outline {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: rgba(255, 255, 255, 0.8);
+      padding: 0.55rem 1.1rem;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+      box-shadow: 0 10px 24px rgba(15, 15, 20, 0.06);
+    }
+
+    .btn-outline:hover {
+      background: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(15, 15, 20, 0.08);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-meta strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .hero-media {
+      position: relative;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: var(--radius-xl);
+      padding: 1.3rem 1.4rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main-img {
+      border-radius: 20px;
+      overflow: hidden;
+      max-height: 280px;
+      margin-bottom: 1rem;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .hero-card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.78rem;
+    }
+
+    .hero-stat-label {
+      color: var(--muted);
+    }
+
+    .hero-stat-value {
+      font-weight: 600;
+    }
+
+    .floating-card {
+      position: absolute;
+      right: -12px;
+      bottom: -12px;
+      background: #111112;
+      color: #fff;
+      padding: 0.8rem 1rem;
+      border-radius: 16px 0 0 18px;
+      font-size: 0.75rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .floating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      opacity: 0.8;
+      margin-bottom: 0.25rem;
+    }
+
+    .floating-title {
+      font-weight: 500;
+      margin-bottom: 0.1rem;
+    }
+
+    /* Collections */
+
+    .section {
+      padding: 1.5rem 0 2.2rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 360px;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .collection-card {
+      background: var(--bg-alt);
+      border-radius: var(--radius-lg);
+      padding: 0.8rem 0.85rem 0.9rem;
+      box-shadow: 0 12px 32px rgba(15, 15, 20, 0.06);
+      border: 1px solid rgba(224, 221, 216, 0.7);
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border var(--transition-med);
+      cursor: pointer;
+    }
+
+    .collection-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(15, 15, 20, 0.12);
+      border-color: rgba(193, 127, 74, 0.45);
+    }
+
+    .collection-img {
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      margin-bottom: 0.7rem;
+      background: #ddd;
+      position: relative;
+    }
+
+    .collection-label {
+      position: absolute;
+      bottom: 0.6rem;
+      left: 0.7rem;
+      background: rgba(17, 17, 18, 0.82);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-pill);
+    }
+
+    .collection-name {
+      font-size: 0.95rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .collection-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .price-pill {
+      padding: 0.2rem 0.65rem;
+      border-radius: var(--radius-pill);
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.74rem;
+    }
+
+    /* About + Contact */
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.8rem;
+    }
+
+    .about-text p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .about-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.4rem 1.4rem;
+      font-size: 0.86rem;
+      margin-top: 0.5rem;
+    }
+
+    .about-list li::before {
+      content: "•";
+      margin-right: 0.4rem;
+      color: var(--primary);
+    }
+
+    .contact-card {
+      background: #111112;
+      color: #fefdfb;
+      border-radius: var(--radius-xl);
+      padding: 1.2rem 1.3rem 1.3rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .contact-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .contact-card p {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-bottom: 0.9rem;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .contact-row span {
+      opacity: 0.8;
+    }
+
+    .contact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-pill);
+      background: rgba(245, 243, 240, 0.08);
+      font-size: 0.78rem;
+    }
+
+    .contact-pill strong {
+      opacity: 1;
+    }
+
+    .contact-cta {
+      margin-top: 0.4rem;
+    }
+
+    .contact-cta button {
+      background: #f5f3f0;
+      border-radius: var(--radius-pill);
+      border: none;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    .contact-cta button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+      background: #ffffff;
+    }
+
+    /* Footer */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.2rem 0 1.6rem;
+      margin-top: auto;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+    }
+
+    /* Small devices */
+
+    @media (max-width: 840px) {
+      .hero-grid,
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero {
+        padding-top: 2rem;
+      }
+
+      .hero-media {
+        order: -1;
+      }
+
+      .collections-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        gap: 0.7rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .collections-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-card {
+        padding: 1.05rem 1.1rem;
+      }
+
+      .floating-card {
+        position: static;
+        margin-top: 0.75rem;
+        border-radius: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header -->
+    <header>
+      <div class="container nav">
+        <div class="logo">
+          <div class="logo-mark"></div>
+          <span>AuraDecor</span>
+        </div>
+        <nav class="nav-links">
+          <a href="#collections">Collections</a>
+          <a href="#about">About</a>
+          <a href="#contact">Visit Studio</a>
+        </nav>
+        <div class="nav-cta">
+          <div class="pill">
+            <span>★</span>
+            <span>Curated Interiors</span>
+          </div>
+          <button class="btn-primary" onclick="scrollToSection('contact')">
+            Book consult <span>↗</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <main>
+      <section class="hero container">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              <span>Modern home styling</span>
+            </div>
+            <h1>
+              Elevate your space with
+              <span class="highlight">warm, minimal decor.</span>
+            </h1>
+            <p class="hero-sub">
+              AuraDecor crafts soft, timeless interiors with curated pieces that blend
+              texture, light and comfort. From a single corner to your full home makeover.
+            </p>
+
+            <div class="hero-actions">
+              <button class="btn-primary" onclick="scrollToSection('collections')">
+                Browse collections
+                <span>↓</span>
+              </button>
+              <button class="btn-outline" onclick="scrollToSection('contact')">
+                Free 15-min styling call
+              </button>
+            </div>
+
+            <div class="hero-meta">
+              <div>
+                <strong>280+ homes</strong>
+                styled in the last 2 years.
+              </div>
+              <div>
+                <strong>4.9★ rating</strong>
+                average across clients.
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-media">
+            <div class="hero-card">
+              <div class="hero-main-img">
+                <!-- Placeholder decor image using gradient -->
+                <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:#fbe4cc;stop-opacity:1" />
+                      <stop offset="50%" style="stop-color:#e2c5a1;stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#c17f4a;stop-opacity:1" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="600" height="400" fill="url(#grad1)" />
+                  <rect x="40" y="60" width="200" height="280" rx="30" fill="#f5f3f0" />
+                  <rect x="260" y="120" width="250" height="170" rx="24" fill="#f5f3f0" />
+                  <circle cx="145" cy="150" r="58" fill="#dfc1a0" />
+                  <rect x="285" y="145" width="90" height="120" rx="18" fill="#f1e5d7" />
+                  <rect x="390" y="145" width="95" height="120" rx="18" fill="#f1e5d7" />
+                  <rect x="100" y="250" width="120" height="40" rx="20" fill="#111112" opacity="0.9" />
+                  <rect x="310" y="270" width="140" height="34" rx="17" fill="#111112" opacity="0.75" />
+                </svg>
+              </div>
+
+              <div class="hero-tag">
+                <span>●</span>
+                <span>New · Earthy Corner Series</span>
+              </div>
+              <h2>Soft neutrals, real warmth.</h2>
+              <p>
+                Mix natural woods, linen textures and warm lighting to turn any room into a calm, cozy retreat.
+              </p>
+              <div class="hero-stats">
+                <div>
+                  <div class="hero-stat-label">Avg. project</div>
+                  <div class="hero-stat-value">₹38K – ₹1.8L</div>
+                </div>
+                <div>
+                  <div class="hero-stat-label">Timeline</div>
+                  <div class="hero-stat-value">2 – 6 weeks</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="floating-card">
+              <div class="floating-badge">
+                <span>TRUSTED BY CITY HOMES</span>
+              </div>
+              <div class="floating-title">“Feels like a boutique hotel now.”</div>
+              <div style="font-size: 0.7rem; opacity: 0.9;">
+                — Meera & Arjun, 2BHK makeover
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Collections -->
+      <section id="collections" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Signature decor collections</h2>
+              <p class="section-sub">
+                Choose from ready-to-style decor sets or mix and match to suit your space.
+              </p>
+            </div>
+            <button class="btn-outline" onclick="alert('This is a static demo. Integrate with your backend or shop platform.')">
+              View full catalog
+              <span>↗</span>
+            </button>
+          </div>
+
+          <div class="collections-grid">
+            <!-- Card 1 -->
+            <article class="collection-card">
+              <div class="collection-img">
+                <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                  <rect width="600" height="400" fill="#f5f3f0" />
+                  <rect x="60" y="80" width="180" height="240" rx="26" fill="#e4d6c9" />
+                  <rect x="260" y="110" width="260" height="200" rx="24" fill="#dfc1a0" />
+                  <circle cx="150" cy="165" r="56" fill="#f5f3f0" />
+                  <rect x="320" y="140" width="80" height="110" rx="18" fill="#f5f3f0" />
+                  <rect x="415" y="155" width="70" height="90" rx="18" fill="#f5f3f0" />
+                </svg>
+                <span class="collection-label">Living room set</span>
+              </div>
+              <h3 class="collection-name">Warm Minimal Lounge</h3>
+              <div class="collection-meta">
+                <span>8 curated pieces</span>
+                <span class="price-pill">From ₹18,900</span>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="collection-card">
+              <div class="collection-img">
+                <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                  <rect width="600" height="400" fill="#f3f1ee" />
+                  <rect x="80" y="90" width="200" height="220" rx="26" fill="#dfc1a0" />
+                  <rect x="310" y="75" width="210" height="250" rx="26" fill="#ead9c7" />
+                  <circle cx="180" cy="190" r="48" fill="#f3f1ee" />
+                  <rect x="335" y="120" width="70" height="110" rx="18" fill="#f5f3f0" />
+                  <rect x="420" y="135" width="70" height="110" rx="18" fill="#f5f3f0" />
+                </svg>
+                <span class="collection-label">Bedroom set</span>
+              </div>
+              <h3 class="collection-name">Calm Bedroom Haven</h3>
+              <div class="collection-meta">
+                <span>Textiles & lighting</span>
+                <span class="price-pill">From ₹14,500</span>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="collection-card">
+              <div class="collection-img">
+                <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                  <rect width="600" height="400" fill="#f5f3f0" />
+                  <rect x="60" y="70" width="230" height="250" rx="28" fill="#ead9c7" />
+                  <rect x="320" y="100" width="210" height="210" rx="24" fill="#dfc1a0" />
+                  <circle cx="175" cy="170" r="52" fill="#f5f3f0" />
+                  <rect x="345" y="140" width="70" height="100" rx="18" fill="#f5f3f0" />
+                  <rect x="425" y="155" width="70" height="90" rx="18" fill="#f5f3f0" />
+                </svg>
+                <span class="collection-label">Dining / nook</span>
+              </div>
+              <h3 class="collection-name">Cozy Morning Corner</h3>
+              <div class="collection-meta">
+                <span>Perfect for small spaces</span>
+                <span class="price-pill">From ₹9,800</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- About + Contact -->
+      <section id="about" class="section">
+        <div class="container two-col">
+          <div class="about-text">
+            <h2 class="section-title">Design that feels lived-in, not staged.</h2>
+            <p>
+              We believe decor should make your home feel like you — warm, welcoming and effortless. Every AuraDecor
+              project starts with how you actually live: your routines, your light, your favourite corners.
+            </p>
+            <p>
+              Our stylists combine neutral palettes with rich textures, statement lighting and thoughtfully chosen
+              accents to create spaces that are calm yet full of character.
+            </p>
+            <ul class="about-list">
+              <li>Room-by-room styling packages</li>
+              <li>Custom moodboards & shopping lists</li>
+              <li>Virtual & in-person consults</li>
+              <li>On-site styling & setup</li>
+            </ul>
+          </div>
+
+          <div id="contact" class="contact-card">
+            <h3>Book a studio visit or call</h3>
+            <p>Tell us about your space and we’ll help you map a simple decor plan in 15 minutes.</p>
+
+            <div class="contact-row">
+              <div>
+                <span>WhatsApp</span><br />
+                <strong>+91-98765-12345</strong>
+              </div>
+              <div>
+                <span>Email</span><br />
+                <strong>hello@auradecor.studio</strong>
+              </div>
+              <div>
+                <span>Studio</span><br />
+                <strong>Indiranagar, Bengaluru</strong>
+              </div>
+            </div>
+
+            <div class="contact-pill">
+              <span>✓</span>
+              <span><strong>Free</strong> first consult · No pressure to buy</span>
+            </div>
+
+            <div class="contact-cta">
+              <button onclick="openMail()">
+                Send project details
+                <span>✉️</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container footer-row">
+        <div>© <span id="year"></span> AuraDecor Studio. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="#collections">Collections</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function openMail() {
+      const subject = encodeURIComponent("Decor project enquiry – AuraDecor");
+      const body = encodeURIComponent(
+        "Hi AuraDecor team,\n\nI’d love help styling my space.\n\nSpace type (e.g. 2BHK / studio / villa):\nCity:\nTimeline:\nBudget range:\nStyle I love (if any references):\n\nThanks!"
+      );
+      window.location.href = `mailto:hello@auradecor.studio?subject=${subject}&body=${body}`;
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
